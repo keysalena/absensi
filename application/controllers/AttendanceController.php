@@ -11,13 +11,13 @@ class AttendanceController extends CI_Controller
         $this->load->helper('url');
         $this->load->database();
         $this->load->library('session');
-        $allowed_ips = ['103.79.246.93', '182.1.83.109', '::1'];
+        // $allowed_ips = ['103.79.246.93', '182.1.83.109', '::1'];
 
-        $user_ip = $this->input->ip_address();
+        // $user_ip = $this->input->ip_address();
 
-        if (!in_array($user_ip, $allowed_ips)) {
-            show_error('Akses ditolak: Anda tidak terhubung ke Wi-Fi yang diizinkan', 403);
-        }
+        // if (!in_array($user_ip, $allowed_ips)) {
+        //     show_error('Akses ditolak: Anda tidak terhubung ke Wi-Fi yang diizinkan', 403);
+        // }
         if ($this->session->user['role'] == 'admin') {
             redirect('admin');
         }
@@ -61,7 +61,7 @@ class AttendanceController extends CI_Controller
 
         $user = $this->session->userdata('user');
         $time = $this->input->get('time');
-        $date = date('Y-m-d');
+        $date = date('Y-m-d'); // Tanggal saat ini
         $log_kegiatan = $this->input->post('log_kegiatan'); // Ambil log kegiatan dari input form
 
         if (!$time || !preg_match('/^\d{2}:\d{2}:\d{2}$/', $time)) {
@@ -86,7 +86,24 @@ class AttendanceController extends CI_Controller
 
         redirect('attendance');
     }
+    public function process_absen_special($type)
+    {
+        if (!$this->session->userdata('user')) {
+            redirect('login');
+        }
 
+        $user = $this->session->userdata('user');
+        $date = date('Y-m-d'); // Tanggal saat ini
+
+        if ($type === 'izin' || $type === 'sakit') {
+            $this->Attendance_model->special_attendance($user['id'], $date, $type);
+            $this->session->set_flashdata('success', 'Berhasil absen ' . $type . '!');
+        } else {
+            $this->session->set_flashdata('error', 'Aksi tidak valid!');
+        }
+
+        redirect('attendance');
+    }
     private function get_month_list()
     {
         return [

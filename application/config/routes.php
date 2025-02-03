@@ -57,5 +57,6 @@ $route['attendance'] = 'AttendanceController/index';
 $route['attendance/process_absen/(:any)'] = 'AttendanceController/process_absen/$1';
 $route['admin'] = 'AdminController/index';
 $route['admin/get_absensi'] = 'AdminController/get_absensi';
+$route['attendance/process_absen_special/(:any)'] = 'AttendanceController/process_absen_special/$1';
 
 $route['translate_uri_dashes'] = FALSE;

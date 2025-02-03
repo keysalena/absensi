@@ -38,10 +38,29 @@ class Attendance_model extends CI_Model
     {
         $data = [
             'waktu_pulang' => $time,
-            'log_kegiatan' => $log_kegiatan 
+            'log_kegiatan' => $log_kegiatan
         ];
         $this->db->where('user_id', $user_id);
         $this->db->where('tanggal', $date);
         $this->db->update('absensi', $data);
+    }
+    public function special_attendance($user_id, $date, $type)
+    {
+        $data = [
+            'user_id' => $user_id,
+            'tanggal' => $date,
+            'waktu_masuk' => $type,
+            'waktu_pulang' => $type,
+            'log_kegiatan' => '-'
+        ];
+
+        $existing_attendance = $this->db->get_where('absensi', ['user_id' => $user_id, 'tanggal' => $date])->row();
+
+        if ($existing_attendance) {
+            $this->db->where('id', $existing_attendance->id);
+            $this->db->update('absensi', $data);
+        } else {
+            $this->db->insert('absensi', $data);
+        }
     }
 }

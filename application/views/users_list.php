@@ -26,7 +26,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nama Lengkap</th>
-                    <th>Username</th>
+                    <!-- <th>Username</th> -->
                     <th>Role</th>
                     <th>Aksi</th>
                 </tr>
@@ -39,7 +39,7 @@
                     <tr>
                         <td><?= $no++ ?></td>
                         <td><?= $user['nama']; ?></td>
-                        <td><?= $user['username']; ?></td>
+                        <!-- <td><?= $user['username']; ?></td> -->
                         <td><?= $user['role']; ?></td>
                         <td>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal"

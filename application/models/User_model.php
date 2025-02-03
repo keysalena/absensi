@@ -11,16 +11,15 @@ class User_model extends CI_Model
 
     public function get_user_by_username($username)
     {
-        // Query the database for the user with the provided username
         $this->db->where('username', $username);
         $query = $this->db->get('users');
 
-        // Return the result if any
         return $query->row_array();
     }
     public function get_all_users()
     {
         $this->db->where('role !=', 'admin');
+        $this->db->order_by('role', 'DESC');
         $query = $this->db->get('users');
         return $query->result_array();
     }

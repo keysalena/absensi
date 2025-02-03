@@ -11,7 +11,7 @@
 
 <body class="bg-light">
     <?php
-    date_default_timezone_set('Asia/Jakarta'); // Set zona waktu ke WIB
+    date_default_timezone_set('Asia/Jakarta');
     ?>
     <div class="container py-5">
         <h4>Selamat datang, <?= htmlspecialchars($user['nama']); ?>!</h4>
@@ -26,9 +26,9 @@
             <div class="card-body">
                 <form method="POST" action="<?= base_url('attendance'); ?>">
                     <div class="row g-3 align-items-center">
-                        <div class="col-auto">
+                        <!-- <div class="col-auto">
                             <label for="filterBulan" class="form-label">Filter Bulan:</label>
-                        </div>
+                        </div> -->
                         <div class="col-auto">
                             <select class="form-select" id="filterBulan" name="bulan" onchange="this.form.submit()">
                                 <?php foreach ($bulan as $key => $nama_bulan): ?>
@@ -45,21 +45,38 @@
                         </div>
                     </div>
                 </form>
+                <?php
+                $allowed_ips = ['103.79.246.93', '182.1.83.109', '::1'];
 
-                <div class="mt-3">
-                    <button
-                        class="btn btn-success"
-                        onclick="window.location.href='<?= base_url('attendance/process_absen/masuk?time=' . urlencode(date('H:i:s'))); ?>'"
-                        <?= ($today_attendance && isset($today_attendance['waktu_masuk'])) ? 'disabled' : ''; ?>>
-                        Masuk
-                    </button>
-                    <button class="btn btn-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#kegiatanModal"
-                        <?= !$today_attendance || !isset($today_attendance['waktu_masuk']) || isset($today_attendance['waktu_pulang']) ? 'disabled' : ''; ?>>
-                        Pulang
-                    </button>
-                </div>
+                $user_ip = $this->input->ip_address();
+                // echo $user_ip;
+                if (!in_array($user_ip, $allowed_ips)) { ?>
+                    <div class="mt-3">
+                        <button class="btn btn-warning"
+                            onclick="window.location.href='<?= base_url('attendance/process_absen_special/izin'); ?>'">
+                            Izin
+                        </button>
+                        <button class="btn btn-danger"
+                            onclick="window.location.href='<?= base_url('attendance/process_absen_special/sakit'); ?>'">
+                            Sakit
+                        </button>
+                    </div>
+                <?php } else { ?>
+                    <div class="mt-3">
+                        <button
+                            class="btn btn-success"
+                            onclick="window.location.href='<?= base_url('attendance/process_absen/masuk?time=' . urlencode(date('H:i:s'))); ?>'"
+                            <?= ($today_attendance && isset($today_attendance['waktu_masuk'])) ? 'disabled' : ''; ?>>
+                            Masuk
+                        </button>
+                        <button class="btn btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#kegiatanModal"
+                            <?= !$today_attendance || !isset($today_attendance['waktu_masuk']) || isset($today_attendance['waktu_pulang']) ? 'disabled' : ''; ?>>
+                            Pulang
+                        </button>
+                    </div>
+                <?php } ?>
                 <table class="table table-bordered mt-4">
                     <thead>
                         <tr>

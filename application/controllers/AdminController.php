@@ -15,13 +15,13 @@ class AdminController extends CI_Controller {
         if (!isset($this->session->user) || $this->session->user['role'] != 'admin') {
             redirect('login');
         }
-        $allowed_ips = ['103.79.246.93', '182.1.83.109', '::1'];
+        // $allowed_ips = ['103.79.246.93', '182.1.83.109', '::1'];
 
-        $user_ip = $this->input->ip_address();
+        // $user_ip = $this->input->ip_address();
 
-        if (!in_array($user_ip, $allowed_ips)) {
-            show_error('Akses ditolak: Anda tidak terhubung ke Wi-Fi yang diizinkan', 403);
-        }
+        // if (!in_array($user_ip, $allowed_ips)) {
+        //     show_error('Akses ditolak: Anda tidak terhubung ke Wi-Fi yang diizinkan', 403);
+        // }
     }
 
     public function index()
