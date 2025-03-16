@@ -15,6 +15,12 @@
             <div class="col-auto">
                 <h2>Daftar Pengguna</h2>
             </div>
+ 
+            <div class="col-auto ms-auto mr-3 ">
+                <a href="<?= base_url('print'); ?>" class="btn btn-primary" title="Cetak Laporan">  
+                <i class="fa-thin fa-print"></i>
+                </a>
+            </div>
             <div class="col-auto ms-auto">
                 <a href="<?= base_url('logout'); ?>" class="btn btn-danger" title="Logout">
                     <i class="fas fa-sign-out-alt"></i>
