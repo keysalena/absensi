@@ -5,61 +5,68 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | -------------------------------------------------------------------------
 | URI ROUTING
 | -------------------------------------------------------------------------
-| This file lets you re-map URI requests to specific controller functions.
-|
-| Typically there is a one-to-one relationship between a URL string
-| and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
-|
-|	example.com/class/method/id/
-|
-| In some instances, however, you may want to remap this relationship
-| so that a different class/function is called than the one
-| corresponding to the URL.
-|
-| Please see the user guide for complete details:
-|
-|	https://codeigniter.com/userguide3/general/routing.html
-|
-| -------------------------------------------------------------------------
-| RESERVED ROUTES
-| -------------------------------------------------------------------------
-|
-| There are three reserved routes:
-|
-|	$route['default_controller'] = 'welcome';
-|
-| This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
-| would be loaded.
-|
-|	$route['404_override'] = 'errors/page_missing';
-|
-| This route will tell the Router which controller/method to use if those
-| provided in the URL cannot be matched to a valid route.
-|
-|	$route['translate_uri_dashes'] = FALSE;
-|
-| This is not exactly a route, but allows you to automatically route
-| controller and method names that contain dashes. '-' isn't a valid
-| class or method name character, so it requires translation.
-| When you set this option to TRUE, it will replace ALL dashes in the
-| controller and method URI segments.
-|
-| Examples:	my-controller/index	-> my_controller/index
-|		my-controller/my-method	-> my_controller/my_method
+| File ini digunakan untuk memetakan URI request ke fungsi controller tertentu.
+| Memungkinkan custom routing untuk membuat URL yang lebih bersih dan SEO friendly.
 */
-$route['default_controller']   = 'AttendanceController';
-$route['register'] = 'register';
-$route['logout'] = 'Login/logout';
-$route['register/process'] = 'register/process';
-$route['attendance'] = 'AttendanceController/index';
-$route['attendance/process_absen/(:any)'] = 'AttendanceController/process_absen/$1';
-$route['admin'] = 'AdminController/index';
-$route['admin/get_absensi'] = 'AdminController/get_absensi';
-$route['profile'] = 'profile';
-$route['profile/update'] = 'profile/update';
-$route['dashboard'] = 'dashboard';
 
+/*
+| -------------------------------------------------------------------------
+| DEFAULT CONTROLLER
+| -------------------------------------------------------------------------
+| Controller yang akan di-load ketika tidak ada URI yang ditentukan
+*/
+$route['default_controller'] = 'AttendanceController'; // Controller utama untuk halaman depan
 
-$route['translate_uri_dashes'] = FALSE;
+/*
+| -------------------------------------------------------------------------
+| AUTHENTICATION ROUTES
+| -------------------------------------------------------------------------
+| Routing untuk proses autentikasi (login/logout/register)
+*/
+$route['register'] = 'register'; // Halaman pendaftaran
+$route['register/process'] = 'register/process'; // Proses form pendaftaran
+$route['logout'] = 'Login/logout'; // Proses logout
+
+/*
+| -------------------------------------------------------------------------
+| ATTENDANCE ROUTES
+| -------------------------------------------------------------------------
+| Routing untuk fitur absensi
+*/
+$route['attendance'] = 'AttendanceController/index'; // Halaman absensi utama
+$route['attendance/process_absen/(:any)'] = 'AttendanceController/process_absen/$1'; // Proses absen dengan parameter
+
+/*
+| -------------------------------------------------------------------------
+| ADMIN ROUTES
+| -------------------------------------------------------------------------
+| Routing untuk halaman admin
+*/
+$route['admin'] = 'AdminController/index'; // Dashboard admin
+$route['admin/get_absensi'] = 'AdminController/get_absensi'; // Endpoint API untuk data absensi
+
+/*
+| -------------------------------------------------------------------------
+| PROFILE ROUTES
+| -------------------------------------------------------------------------
+| Routing untuk manajemen profil pengguna
+*/
+$route['profile'] = 'profile'; // Halaman profil
+$route['profile/update'] = 'profile/update'; // Proses update profil
+
+/*
+| -------------------------------------------------------------------------
+| DASHBOARD ROUTE
+| -------------------------------------------------------------------------
+| Routing untuk halaman dashboard pengguna
+*/
+$route['dashboard'] = 'dashboard'; // Halaman dashboard setelah login
+
+/*
+| -------------------------------------------------------------------------
+| TRANSLATE URI DASHES
+| -------------------------------------------------------------------------
+| Konversi otomatis tanda strip (-) menjadi underscore (_) pada URI
+| Berguna untuk kompatibilitas nama controller/method
+*/
+$route['translate_uri_dashes'] = FALSE; // Nonaktifkan fitur konversi
